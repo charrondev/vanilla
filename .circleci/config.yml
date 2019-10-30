@@ -186,18 +186,16 @@ jobs:
     chromatic_test:
         executor: chromatic/node
         parameters:
-            disableChromatic:
+            enableChromatic:
                 type: env_var_name
-                default: DISABLE_CHROMATIC
+                default: ENABLE_CHROMATIC
         steps:
             - when:
-                condition: << parameters.disableChromatic >>
+                condition: << parameters.enableChromatic >>
                 steps:
                     - checkout
                     - chromatic/load-node-modules
                     - chromatic/test-exit-cleanly-on-changes
-            - run:
-                command: "true"
 
 workflows:
     version: 2
