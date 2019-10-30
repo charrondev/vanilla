@@ -190,7 +190,7 @@ jobs:
                 type: env_var_name
                 default: DISABLE_CHROMATIC
         steps:
-            - unless:
+            - when:
                 condition: << parameters.disableChromatic >>
                 steps:
                     - core/checkout
