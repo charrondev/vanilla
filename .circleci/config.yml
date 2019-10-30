@@ -33,6 +33,7 @@ aliases:
 
                 # Run code sniffer on the diffed files.
                 ./.circleci/scripts/diff-standards.sh $CUSTOM_TARGET_BRANCH
+
 jobs:
     frontend_setup:
         executor: core/node
@@ -182,12 +183,25 @@ jobs:
         steps:
             - core/checkout
             - run: yarn audit
+    chromatic_test:
+        executor: chromatic/node
+        parameters:
+            disableChromatic:
+                type: env_var_name
+                default: DISABLE_CHROMATIC
+        steps:
+            - unless:
+                condition: << parameters.disableChromatic >>
+                steps:
+                    - checkout
+                    - chromatic/load-node-modules
+                    - chromatic/test-exit-cleanly-on-changes
 
 workflows:
     version: 2
     commit:
         jobs:
-            - chromatic/test:
+            - chromatic_test:
                 filters:
                     branches:
                         ignore: master
