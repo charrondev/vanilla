@@ -190,6 +190,8 @@ jobs:
                 type: env_var_name
                 default: ENABLE_CHROMATIC
         steps:
+            - run:
+                command: Hello "<< parameters.enableChromatic >>"
             - when:
                 condition: << parameters.enableChromatic >>
                 steps:
