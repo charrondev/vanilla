@@ -193,7 +193,7 @@ jobs:
             - when:
                 condition: << parameters.disableChromatic >>
                 steps:
-                    - core/checkout
+                    - checkout
                     - chromatic/load-node-modules
                     - chromatic/test-exit-cleanly-on-changes
             - run:
