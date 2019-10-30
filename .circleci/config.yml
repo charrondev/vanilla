@@ -190,14 +190,14 @@ jobs:
                 type: env_var_name
                 default: DISABLE_CHROMATIC
         steps:
-            - run:
-                command: "true"
             - unless:
                 condition: << parameters.disableChromatic >>
                 steps:
                     - core/checkout
                     - chromatic/load-node-modules
                     - chromatic/test-exit-cleanly-on-changes
+            - run:
+                command: "true"
 
 workflows:
     version: 2
