@@ -1047,7 +1047,7 @@ class PostController extends VanillaController {
         ];
 
         $activityModel = new ActivityModel();
-        $this->DiscussionModel->notifyNewDiscussion($discussion, $activityModel, $activity);
+        $this->DiscussionModel->recordAdvancedNotications($activityModel, $activity, (array)$discussion);
         $activityModel->saveQueue();
         $this->DiscussionModel->setField($discussionID, 'Notified', ActivityModel::SENT_OK);
 

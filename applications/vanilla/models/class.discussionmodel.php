@@ -2238,9 +2238,12 @@ class DiscussionModel extends Gdn_Model {
             $discussion = $this->getID($discussion, DATASET_TYPE_ARRAY);
         }
 
-        if (!is_array($discussion)) {
+        if (is_object($discussion)) {
+            $discussion = (array)$discussion;
+        } elseif (!is_array($discussion)) {
             return;
         }
+
         $body = $discussion["Body"] ?? null;
         $categoryID = $discussion["CategoryID"] ?? null;
         $discussionID = $discussion["DiscussionID"] ?? null;
@@ -2344,11 +2347,12 @@ class DiscussionModel extends Gdn_Model {
     /**
      * Record advanced notifications for users.
      *
+     * @internal This is an interstitial method that will likely be removed or altered as part of ongoing refactoring.
      * @param ActivityModel $activityModel
      * @param array $activity
      * @param array $discussion
      */
-    private function recordAdvancedNotications(ActivityModel $activityModel, array $activity, array $discussion) {
+    public function recordAdvancedNotications(ActivityModel $activityModel, array $activity, array $discussion) {
         $categoryID = $discussion["CategoryID"] ?? null;
         $insertUserID = $discussion["InsertUserID"] ?? null;
 
